@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	envPrefix = "GWC"
+	envPrefix = "GHA_CLI"
 )
 
 var (
