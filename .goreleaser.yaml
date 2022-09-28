@@ -20,6 +20,11 @@ builds:
       - "arm64"
     env:
       - CGO_ENABLED=0
+    ldflags:
+      - -extldflags '-static'
+      - -X "github.com/Norsk-Tipping/gha-cli/cmd.GitHash={{ .Env.GITHASH }}"
+      - -X "github.com/Norsk-Tipping/gha-cli/cmd.GitTag={{ .Env.GITTAG }}"
+      - -X "github.com/Norsk-Tipping/gha-cli/cmd.GitBranch={{ .Env.GITBRANCH }}"
     ignore:
       - goos: windows
         goarch: arm64

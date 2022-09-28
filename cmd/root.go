@@ -31,6 +31,7 @@ var (
 	gitHubOrganizationName string
 	gitHubPrivateKeyFile   string
 	ghClient               *github.Client
+	Version                string
 )
 
 func init() {
