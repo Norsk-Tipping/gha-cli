@@ -22,5 +22,10 @@ var (
 )
 
 func init() {
+	if len(GitTag) == 0 {
+		Version = GitBranch + " (" + GitHash + ")"
+	} else {
+		Version = GitTag + " (" + GitHash + ")"
+	}
 	rootCmd.AddCommand(versionCmd)
 }
