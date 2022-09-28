@@ -28,6 +28,15 @@ var (
 			listRepositories()
 		},
 	}
+
+	repositoryFindCmd = &cobra.Command{
+		Use:   "find",
+		Short: "Find a GitHub repository by name",
+		Long:  "Find a GitHub repository by name",
+		Run: func(cmd *cobra.Command, args []string) {
+			findRepository()
+		},
+	}
 )
 
 func listRepositories() {
@@ -44,11 +53,33 @@ func listRepositories() {
 	for _, item := range repos {
 		fmt.Printf("- %s\n", *item.Name)
 	}
+}
 
+func findRepository() {
+	// initialize github client
+	ghClient = client.CreateGitHubClientWithPrivateKeyFile(gitHubAppId, gitHubInstallationId, gitHubPrivateKeyFile)
+	ctx := context.Background()
+	repo, _, err := ghClient.Repositories.Get(ctx, gitHubOrganizationName, repositoryName)
+	if err != nil {
+		fmt.Println("error: Could not find repository:", err)
+		os.Exit(1)
+	}
+
+	if *repo.Name != repositoryName {
+		fmt.Printf("error: supplied name %s does not match repository name %s\n", repositoryName, *repo.Name)
+		os.Exit(1)
+	}
+	fmt.Println("Found repository by name:", *repo.Name)
 }
 
 func init() {
 	addRequiredFlags(repositoryCmd)
+
+	// find command
+	repositoryFindCmd.Flags().StringVarP(&repositoryName, "repository", "r", "", "GitHub repository name")
+	_ = repositoryFindCmd.MarkFlagRequired("repository")
+
+	repositoryCmd.AddCommand(repositoryFindCmd)
 	repositoryCmd.AddCommand(repositoryListCmd)
 	rootCmd.AddCommand(repositoryCmd)
 }
