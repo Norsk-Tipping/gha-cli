@@ -20,6 +20,9 @@ builds:
       - "arm64"
     env:
       - CGO_ENABLED=0
+    ignore:
+      - goos: windows
+        goarch: arm64
 
 archives:
   - format: tar.gz
