@@ -3,3 +3,4 @@ private.key
 .idea/
 exports.sh
 gha-cli
+dist/
