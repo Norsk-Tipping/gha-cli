@@ -47,3 +47,12 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+
+brews:
+  - name: gha-cli
+    tap:
+      owner: "{{ .Env.GITHUB_REPOSITORY_OWNER}}"
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TOKEN }}"
+    install: |
+      bin.install "gha-cli"
