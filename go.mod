@@ -1,6 +1,6 @@
 module github.com/Norsk-Tipping/gha-cli
 
-go 1.16
+go 1.18
 
 require (
 	github.com/bradleyfalzon/ghinstallation/v2 v2.1.0
